@@ -55,6 +55,6 @@ def get_all_posts(page_id):
 
 
 if __name__ == '__main__':
-  get_all_posts(pid) #the garbage there is the page ID
+  get_all_posts(pid) 
   
   
