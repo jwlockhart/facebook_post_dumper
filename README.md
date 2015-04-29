@@ -18,3 +18,22 @@ To use the script, download (or git clone) the `facebook_post_dumper.py` file. O
 * output file naming
 * image downloading
 * link downloading
+
+**Q&A:**
+Q: It's slow!
+A: Yup. Facebook does that to keep us from overwhelming their servers with too many requests. (DoS anyone?)
+
+Q: How do I edit/run the script?
+A: Sorry; my github assumes basic coding knowledge. <http://www.codecademy.com> is an excellent resource for newbies, though.
+
+Q: The code's not pretty!
+A: Nope. It's simple and functional though. 
+
+Q: Why doesn't it do ___?
+A: Because I made it to suit my own needs. Feel free to send suggestions, though!
+
+Q: ___ is better for this.
+A: Great, use it! 
+
+Q: I've got an error message!
+A: If it's a problem with my code, let me know so i can fix it!
