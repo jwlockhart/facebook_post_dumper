@@ -22,10 +22,23 @@ max_posts = 3000
 
 def process_page(page):
   # convert a page of results into posts
+  
+  #dummy df to ensure we have the right column names even if the data is missing
+  dummy = pd.DataFrame(columns = ['id', 'created_time', 'type', 'message', 'story', 'link', 'description'])
+
   posts = pd.DataFrame(page['data'])
-  return posts[['id', 'created_time', 'type', 'message', 'story', 'link', 'description']]
+  posts = posts.append(dummy)
+
+  # if we run out of posts
+  if len(posts.index) > 0:
+    return posts[['id', 'created_time', 'type', 'message', 'story', 'link', 'description']]
+  else:
+    return posts
+
 
 def get_all_posts(page_id):
+  # fetch all posts (up to max_posts) from this page
+  
   all_posts = pd.DataFrame()
   
   #authorize facebook, initialize graphAPI:  
