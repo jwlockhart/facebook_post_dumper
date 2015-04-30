@@ -24,7 +24,7 @@ Q: It's slow!
 A: Yup. Facebook does that to keep us from overwhelming their servers with too many requests. (DoS anyone?)
 
 Q: How do I edit/run the script?
-A: Sorry; my github assumes basic coding knowledge. <http://www.codecademy.com> is an excellent resource for newbies, though.
+A: S<http://www.codecademy.com> is an excellent resource for newbies!
 
 Q: The code's not pretty!
 A: Nope. It's simple and functional though. 
