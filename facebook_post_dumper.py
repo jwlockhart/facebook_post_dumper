@@ -18,20 +18,23 @@ pid = ""
 #without an upper bound, this script may download way more than you want
 max_posts = 3000
 
-
+#the fields you would like to save for each post, in your desired order. 
+#other fields exist, but some are complex objects, like 'comments' which is a bit like posts inside posts.
+fields = ['id', 'created_time', 'type', 'message', 'story', 'link', 'description']
 
 def process_page(page):
   # convert a page of results into posts
   
   #dummy df to ensure we have the right column names even if the data is missing
-  dummy = pd.DataFrame(columns = ['id', 'created_time', 'type', 'message', 'story', 'link', 'description'])
+  dummy = pd.DataFrame(columns = fields)
 
   posts = pd.DataFrame(page['data'])
   posts = posts.append(dummy)
 
   # if we run out of posts
   if len(posts.index) > 0:
-    return posts[['id', 'created_time', 'type', 'message', 'story', 'link', 'description']]
+    #select and order the data we want out of the posts, dropping the other columns
+    return posts[fields]
   else:
     return posts
 
@@ -45,7 +48,7 @@ def get_all_posts(page_id):
   graph = facebook.GraphAPI(access_token = token)#, version = '2.2')
   print "Connected to facebook. Starting download of posts from %s..." % page_id
   
-  #facebook restricts this call to 250 results and paginates.
+  #facebook restricts this call to ~250 results and paginates.
   page = graph.get_connections(id = page_id, connection_name = 'posts', limit = 250)
   last_posts = process_page(page)
   all_posts = all_posts.append(last_posts)
@@ -54,17 +57,19 @@ def get_all_posts(page_id):
   
   #keep paging through results until there are none
   while len(last_posts.index) > 0 and len(all_posts.index) < max_posts:
+    #fetch the next page of results from facebook
     page = requests.get(page['paging']['next']).json()
     last_posts = process_page(page)
+    
+    #combine the posts we just pulled with the ones from earlier
     all_posts = all_posts.append(last_posts)
     
     print "%s posts downloaded so far..." % (len(all_posts.index))
   
-  #write the csv
+  #write the csv - uft-8 encoding is needed to match the data from fb
   all_posts.to_csv(page_id +'.csv', encoding = 'utf-8')
   
   print "Done!"
-
 
 
 if __name__ == '__main__':
